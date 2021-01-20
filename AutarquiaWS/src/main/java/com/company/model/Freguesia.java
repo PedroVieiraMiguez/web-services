@@ -18,6 +18,10 @@ public class Freguesia implements Serializable {
     public Freguesia(String nome) {
         setNome(nome);
     }
+    
+    public Freguesia (Freguesia freguesia) {
+        setNome(freguesia.getNome());
+    }
 
     
     public String getNome() {
