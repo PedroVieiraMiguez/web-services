@@ -2,6 +2,7 @@ package com.company.model;
 
 import com.company.exception.ElementoNaoExistenteException;
 import com.company.exception.NifDuplicadoException;
+import com.company.exception.NomeFreguesiaDuplicadoException;
 import com.company.exception.NumeroFuncionarioDuplicadoException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,10 +11,12 @@ public class Autarquia implements Serializable {
 
     private String nome;
     private ArrayList<Pessoa> pessoas;
+    private ArrayList<Freguesia> freguesias;
 
     public Autarquia(String nome) {
         this.nome = nome;
         this.pessoas = new ArrayList<Pessoa>();
+        this.freguesias = new ArrayList<Freguesia>();
     }
 
     public ArrayList<Pessoa> getAllPessoas() {
@@ -31,7 +34,10 @@ public class Autarquia implements Serializable {
         }
         return lista;
     }
-//////////////////////////////////////////////////
+    
+    public ArrayList<Freguesia> getAllFreguesias() {
+        return new ArrayList<>(freguesias);
+    }
 
     public ArrayList<Pessoa> getPessoas() {
         Pessoa pessoa;
@@ -51,12 +57,26 @@ public class Autarquia implements Serializable {
         if (p == null) {
             this.pessoas.add(pessoa);
         } else {
-            throw new NifDuplicadoException(p.getNif() + ": NIF j´a existe");
+            throw new NifDuplicadoException(p.getNif() + ": NIF já existe");
+        }
+    }
+    
+    public boolean addFreguesia(Freguesia freguesia) throws NomeFreguesiaDuplicadoException {
+        Freguesia f = getFreguesiaByNome(freguesia.getNome());
+        if (f == null) {
+            this.freguesias.add(freguesia);
+            return true;
+        } else {
+            throw new NomeFreguesiaDuplicadoException(f.getNome() + ": Nome já existe");
         }
     }
 
     public Pessoa getPessoa(long nif) {
         return getPessoaByNif(nif);
+    }
+    
+    public Freguesia getFreguesia(String nome) {
+        return getFreguesiaByNome(nome);
     }
 
     public void removePessoa(long nif) throws ElementoNaoExistenteException {
@@ -68,11 +88,23 @@ public class Autarquia implements Serializable {
                     this.pessoas.remove(i);
                     return;
                 } else {
-                    throw new ElementoNaoExistenteException(nif + ": N~ao ´euma pessoa, ´eum funcion´ario");
+                    throw new ElementoNaoExistenteException(nif + ": Não é uma pessoa, é um funcionário");
                 }
             }
         }
-        throw new ElementoNaoExistenteException(nif + ": N~ao existe essa pessoa");
+        throw new ElementoNaoExistenteException(nif + ": Não existe essa pessoa");
+    }
+    
+    public void removeFreguesia(String nome) throws ElementoNaoExistenteException {
+        Freguesia freguesia = null;
+        for (int i = 0; i < this.freguesias.size(); i++) {
+            freguesia = this.freguesias.get(i);
+            if (freguesia.getNome().equals(nome)) {
+                this.freguesias.remove(i);
+                    return;
+            }
+        }
+        throw new ElementoNaoExistenteException(nome + ": Não existe essa freguesia");
     }
 
     public void updatePessoa(long nif, Pessoa p) throws ElementoNaoExistenteException {
@@ -86,7 +118,22 @@ public class Autarquia implements Serializable {
             }
         }
         if (updated == false) {
-            throw new ElementoNaoExistenteException(nif + ": N~ao existe essa pessoa");
+            throw new ElementoNaoExistenteException(nif + ": Não existe essa pessoa");
+        }
+    }
+    
+    public void updateFreguesia(String nome, Freguesia f) throws ElementoNaoExistenteException {
+        Freguesia freguesia = null;
+        boolean updated = false;
+        for (int i = 0; i < this.freguesias.size() && !updated; i++) {
+            freguesia = this.freguesias.get(i);
+            if (freguesia.getNome().equals(nome)) {
+                freguesia = f;
+                updated = true;
+            }
+        }
+        if (updated == false) {
+            throw new ElementoNaoExistenteException(nome + ": Não existe essa freguesia");
         }
     }
 
@@ -101,8 +148,19 @@ public class Autarquia implements Serializable {
         }
         return null;
     }
-///////////////////////////////////////////////
-// Funcion´arios
+    
+    private Freguesia getFreguesiaByNome(String nome) {
+        Freguesia freguesia = null;
+        for (int i = 0; i < this.freguesias.size(); i++) {
+            freguesia = this.freguesias.get(i);
+            if (freguesia.getNome().equals(nome)) {
+                Freguesia copia = new Freguesia(freguesia);
+                return copia;
+            }
+        }
+        return null;
+    }
+
 
     public ArrayList<Funcionario> getFuncionarios() {
         Pessoa pessoa;
