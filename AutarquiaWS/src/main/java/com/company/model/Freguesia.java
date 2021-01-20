@@ -1,29 +1,71 @@
 package com.company.model;
 
+import com.company.exception.ElementoNaoExistenteException;
+import com.company.exception.IdTerrenoInvalidoException;
 import com.company.exception.NomeFreguesiaInvalidoException;
 import com.company.exception.NomePessoaInvalidoException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
-/**
- *
- * @author pedro
- */
+
 public class Freguesia implements Serializable {
     
     private String nome;
+    private ArrayList<Terreno> terrenos;
 
     public Freguesia() {
     }
     
     public Freguesia(String nome) {
         setNome(nome);
+        this.terrenos = new ArrayList<>();
     }
     
     public Freguesia (Freguesia freguesia) {
         setNome(freguesia.getNome());
     }
-
     
+    public ArrayList<Terreno> getAllTerrenos() {
+        return new ArrayList<>(terrenos);
+    }
+    
+    public boolean addTerreno(Terreno terreno) throws IdTerrenoInvalidoException {
+        Terreno t = getTerrenoByNumID(terreno.getNumID());
+        if (t == null) {
+            this.terrenos.add(terreno);
+            return true;
+        } else {
+            throw new IdTerrenoInvalidoException(t.getNumID() + ": Terreno já existe");
+        }
+    }
+    
+    public void removeTerreno(int numID) throws ElementoNaoExistenteException {
+        Terreno terreno = null;
+        for (int i = 0; i < this.terrenos.size(); i++) {
+            terreno = this.terrenos.get(i);
+            if (terreno.getNumID() == numID) {
+                this.terrenos.remove(i);
+                    return;
+            }
+        }
+        throw new ElementoNaoExistenteException(nome + ": Não existe esse terreno");
+    }
+    
+    public void updateTerreno(int numID, Terreno t) throws ElementoNaoExistenteException {
+        Terreno terreno = null;
+        boolean updated = false;
+        for (int i = 0; i < this.terrenos.size() && !updated; i++) {
+            terreno = this.terrenos.get(i);
+            if (terreno.getNumID() == numID) {
+                this.terrenos.set(i, t);
+                updated = true;
+            }
+        }
+        if (updated == false) {
+            throw new ElementoNaoExistenteException(nome + ": Não existe essa freguesia");
+        }
+    }
+
     public String getNome() {
         return nome;
     }
@@ -51,5 +93,17 @@ public class Freguesia implements Serializable {
 
         }
         return true;
+    }
+    
+    private Terreno getTerrenoByNumID(int numID) {
+        Terreno terreno = null;
+        for (int i = 0; i < this.terrenos.size(); i++) {
+            terreno = this.terrenos.get(i);
+            if (terreno.getNumID() == numID) {
+                Terreno copia = new Terreno(terreno);
+                return copia;
+            }
+        }
+        return null;
     }
 }

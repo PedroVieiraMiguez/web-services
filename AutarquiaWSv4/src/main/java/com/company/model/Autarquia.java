@@ -113,7 +113,7 @@ public class Autarquia implements Serializable {
         for (int i = 0; i < this.pessoas.size() && !updated; i++) {
             pessoa = this.pessoas.get(i);
             if (pessoa.getNif() == nif) {
-                pessoa = p;
+                this.pessoas.set(i, p);
                 updated = true;
             }
         }
@@ -128,7 +128,7 @@ public class Autarquia implements Serializable {
         for (int i = 0; i < this.freguesias.size() && !updated; i++) {
             freguesia = this.freguesias.get(i);
             if (freguesia.getNome().equals(nome)) {
-                freguesia = f;
+                this.freguesias.set(i, f);
                 updated = true;
             }
         }
@@ -226,7 +226,7 @@ public class Autarquia implements Serializable {
             if (pessoa instanceof Funcionario) {
                 funcionario = (Funcionario) pessoa;
                 if (funcionario.getNumeroFuncionario() == nr) {
-                    funcionario = f;
+                    this.pessoas.set(i, f);
                     updated = true;
                 }
             }

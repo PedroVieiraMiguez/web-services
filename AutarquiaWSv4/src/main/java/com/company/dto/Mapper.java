@@ -65,7 +65,7 @@ public class Mapper {
         return listaPessoaDTO;
     }
     
-    public static ListaFreguesiaDTO listfreguesia2FreguesiaDTO(ArrayList<Freguesia> freguesias) throws NullPointerException {
+    public static ListaFreguesiaDTO listFreguesia2FreguesiaDTO(ArrayList<Freguesia> freguesias) throws NullPointerException {
         ArrayList<FreguesiaDTO> freguesiasDTO = new ArrayList<>();
         for (Freguesia freguesia : freguesias) {
             try {

@@ -14,12 +14,6 @@ public class Terreno {
         setForma(forma);
         setArea(forma.calcularArea());
     }
-    
-    public Terreno (Terreno terreno) {
-        setNumID(terreno.getNumID());
-        setForma(terreno.getForma());
-        setArea(terreno.getArea());
-    }
 
     
     public int getNumID() {
@@ -30,7 +24,7 @@ public class Terreno {
         if (numID > 0) {
             this.numID = numID;
         } else {
-            throw new IdTerrenoInvalidoException(numID + " :número de ID do terreno inválido.");
+            throw new IdTerrenoInvalidoException(numId + " :número de ID do terreno inválido.");
         }
     }
 
