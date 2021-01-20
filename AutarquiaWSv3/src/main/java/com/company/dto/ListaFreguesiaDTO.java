@@ -19,7 +19,7 @@ public class ListaFreguesiaDTO {
         return freguesias;
     }
 
-    public void setFreguesias(ArrayList<FreguesiaDTO> freguesias) {
+    public void setPessoas(ArrayList<FreguesiaDTO> freguesias) {
         this.freguesias = freguesias;
     }
 

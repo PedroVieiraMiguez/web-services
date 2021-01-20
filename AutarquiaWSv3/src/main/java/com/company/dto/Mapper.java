@@ -3,6 +3,7 @@ package com.company.dto;
 import com.company.model.Data;
 import com.company.model.Funcionario;
 import com.company.model.Pessoa;
+import com.company.model.Freguesia;
 import java.util.ArrayList;
 
 public class Mapper {
@@ -29,13 +30,24 @@ public class Mapper {
         pessoaDTO.setNascimento(dataDTO);
         return pessoaDTO;
     }
+    
+    public static FreguesiaDTO freguesia2FreguesiaDTO(Freguesia freguesia) throws NullPointerException {
+        FreguesiaDTO freguesiaDTO = new FreguesiaDTO();
+        freguesiaDTO.setNome(freguesia.getNome());
+        return freguesiaDTO;
+    }
 
     public static Pessoa pessoaDTO2Pessoa(PessoaDTO pessoaDTO) throws NullPointerException {
         Pessoa pessoa = null;
         Data data = dataDTO2data(pessoaDTO.getNascimento());
         pessoa = new Pessoa(pessoaDTO.getNif(), pessoaDTO.getNome(), data);
         return pessoa;
-
+    }
+    
+    public static Freguesia freguesiaDTO2Freguesia(FreguesiaDTO freguesiaDTO) throws NullPointerException {
+        Freguesia freguesia = null;
+        freguesia = new Freguesia(freguesiaDTO.getNome());
+        return freguesia;
     }
 
     public static ListaPessoaDTO listPessoa2PessoaDTO(ArrayList<Pessoa> pessoas) throws NullPointerException {
@@ -45,12 +57,27 @@ public class Mapper {
                 PessoaDTO pessoaDTO = pessoa2PessoaDTO(pessoa);
                 pessoasDTO.add(pessoaDTO);
             } catch (NullPointerException e) {
-//does nothing. Actually, nothing is added to arraylist
+                //nada é adicionado
             }
         }
         ListaPessoaDTO listaPessoaDTO = new ListaPessoaDTO();
         listaPessoaDTO.setPessoas(pessoasDTO);
         return listaPessoaDTO;
+    }
+    
+    public static ListaFreguesiaDTO listfreguesia2FreguesiaDTO(ArrayList<Freguesia> freguesias) throws NullPointerException {
+        ArrayList<FreguesiaDTO> freguesiasDTO = new ArrayList<>();
+        for (Freguesia freguesia : freguesias) {
+            try {
+                FreguesiaDTO freguesiaDTO = freguesia2FreguesiaDTO(freguesia);
+                freguesiasDTO.add(freguesiaDTO);
+            } catch (NullPointerException e) {
+                //nada é adicionado
+            }
+        }
+        ListaFreguesiaDTO listaFreguesiaDTO = new ListaFreguesiaDTO();
+        listaFreguesiaDTO.setFreguesias(freguesiasDTO);
+        return listaFreguesiaDTO;
     }
 
     public static FuncionarioDTO funcionario2FuncionarioDTO(Funcionario funcionario) throws
@@ -82,7 +109,7 @@ public class Mapper {
                 FuncionarioDTO funcionarioDTO = funcionario2FuncionarioDTO(funcionario);
                 funcionariosDTO.add(funcionarioDTO);
             } catch (NullPointerException e) {
-//does nothing. Actually, nothing is added to arraylist
+                //nada é adicionado
             }
         }
         ListaFuncionarioDTO listaFuncionarioDTO = new ListaFuncionarioDTO();
