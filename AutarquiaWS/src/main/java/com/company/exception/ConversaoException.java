@@ -1,9 +1,9 @@
 package com.company.exception;
 
-/**
- *
- * @author pedro
- */
-public class ConversaoException {
+public class ConversaoException extends RuntimeException {
 
+    public ConversaoException(String classe) {
+        super("Erro a converter a classe:" + classe);
+    }
+    
 }
