@@ -6,6 +6,7 @@ import com.company.exception.NomeFreguesiaDuplicadoException;
 import com.company.exception.NumeroFuncionarioDuplicadoException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Autarquia implements Serializable {
 
@@ -80,12 +81,16 @@ public class Autarquia implements Serializable {
         }
     }
 
+    public void addTerreno(String nome, Terreno terreno ) {
+        Objects.requireNonNull(this.getFreguesiaByNome(nome)).addTerreno(terreno);
+    }
+
     public Pessoa getPessoa(long nif) {
-        return getPessoaByNif(nif);
+        return new Pessoa(Objects.requireNonNull(getPessoaByNif(nif)));
     }
     
     public Freguesia getFreguesia(String nome) {
-        return getFreguesiaByNome(nome);
+        return new Freguesia(Objects.requireNonNull(getFreguesiaByNome(nome)));
     }
 
     public void removePessoa(long nif) throws ElementoNaoExistenteException {
@@ -114,6 +119,14 @@ public class Autarquia implements Serializable {
             }
         }
         throw new ElementoNaoExistenteException(nome + ": Não existe essa freguesia");
+    }
+
+    public void removeTerreno(String nome, int numID) throws ElementoNaoExistenteException {
+        try {
+            Objects.requireNonNull(getFreguesiaByNome(nome)).removeTerreno(numID);
+        } catch (ElementoNaoExistenteException e) {
+            throw new ElementoNaoExistenteException(nome + ": Não existe essa freguesia");
+        }
     }
 
     public void updatePessoa(long nif, Pessoa p) throws ElementoNaoExistenteException {
@@ -151,8 +164,7 @@ public class Autarquia implements Serializable {
         for (int i = 0; i < this.pessoas.size(); i++) {
             pessoa = this.pessoas.get(i);
             if (pessoa.getNif() == nif) {
-                Pessoa copia = new Pessoa(pessoa);
-                return copia;
+                return pessoa;
             }
         }
         return null;
@@ -163,8 +175,7 @@ public class Autarquia implements Serializable {
         for (int i = 0; i < this.freguesias.size(); i++) {
             freguesia = this.freguesias.get(i);
             if (freguesia.getNome().equals(nome)) {
-                Freguesia copia = new Freguesia(freguesia);
-                return copia;
+                return freguesia;
             }
         }
         return null;
@@ -258,5 +269,9 @@ public class Autarquia implements Serializable {
             }
         }
         return null;
+    }
+
+    public void updateTerreno(String nome, int numID, Terreno terreno) {
+        Objects.requireNonNull(getFreguesiaByNome(nome)).updateTerreno(numID, terreno);
     }
 }

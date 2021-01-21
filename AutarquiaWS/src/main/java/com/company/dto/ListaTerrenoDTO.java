@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ListaTerrenoDTO {
 
     @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "terrenos")
+    @JacksonXmlProperty(localName = "terreno")
     private ArrayList<Object> terrenos;
 
     public ListaTerrenoDTO() {
