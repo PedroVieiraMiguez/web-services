@@ -61,59 +61,11 @@ public class TerrenosController {
         }
     }
 
-   /* @RequestMapping(value = "freguesias/{nome}/terrenos/triangular/{id}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Object> getTerrenoRectangular(@PathVariable("name") String name, @PathVariable("id") int numID) {
-        try {
-            TerrenoRectangularDTO terrenoRectangularDTO = TerrenosService.getTerrenoRectangular(name, numID);
-            if (terrenoRectangularDTO != null) {
-                return new ResponseEntity<>(terrenoRectangularDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
-        }
-    }
-
-    @RequestMapping(value = "freguesias/{nome}/terrenos/circular/{id}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Object> getTerrenoCircular(@PathVariable("name") String name, @PathVariable("id") int numID) {
-        try {
-            TerrenoCircularDTO terrenoCircularDTO = TerrenosService.getTerrenoCircular(name, numID);
-            if (terrenoCircularDTO != null) {
-                return new ResponseEntity<>(terrenoCircularDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
-        }
-    }
-
-    @RequestMapping(value = "freguesias/{nome}/terrenos/triangular/{id}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Object> getTerrenoTriangular(@PathVariable("name") String name, @PathVariable("id") int numID) {
-        try {
-            TerrenoTriangularDTO terrenoTriangularDTO = TerrenosService.getTerrenoTriangular(name, numID);
-            if (terrenoTriangularDTO != null) {
-                return new ResponseEntity<>(terrenoTriangularDTO, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
-        }
-    }*/
-
     @RequestMapping(value = "/freguesias/{nome}/terrenos/rectangular",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_XML_VALUE,
             produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Object> addPessoa(@RequestBody TerrenoRectangularDTO terrenoRectangularDTO,
+    public ResponseEntity<Object> addTerrenoRectangular(@RequestBody TerrenoRectangularDTO terrenoRectangularDTO,
                                             @PathVariable("nome") String nome) {
         try {
             TerrenosService.addTerrenoRectangular(nome, terrenoRectangularDTO);
@@ -123,31 +75,89 @@ public class TerrenosController {
         }
     }
 
-    /*
-    @RequestMapping(value = "/freguesias/{id}",
+    @RequestMapping(value = "/freguesias/{nome}/terrenos/circular",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_XML_VALUE,
+            produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<Object> addTerrenoCircular(@RequestBody TerrenoCircularDTO terrenoCircularDTO,
+                                                        @PathVariable("nome") String nome) {
+        try {
+            TerrenosService.addTerrenoCircular(nome, terrenoCircularDTO);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
+        }
+    }
+
+    @RequestMapping(value = "/freguesias/{nome}/terrenos/triangular",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_XML_VALUE,
+            produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<Object> addTerrenoTriangular(@RequestBody TerrenoTriangularDTO terrenoTriangularDTO,
+                                                     @PathVariable("nome") String nome) {
+        try {
+            TerrenosService.addTerrenoTriangular(nome, terrenoTriangularDTO);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
+        }
+    }
+
+    @RequestMapping(value = "/freguesias/{nome}/terrenos/rectangular/{id}",
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_XML_VALUE,
             produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Object> updateFreguesia(@PathVariable("id") String nome, @RequestBody FreguesiaDTO freguesiaDTO
+    public ResponseEntity<Object> updateTerrenoRectangular(@PathVariable("nome") String nome, @PathVariable("id") int numID,
+                                                  @RequestBody TerrenoRectangularDTO terrenoRectangularDTO
     ) {
         try {
-            FreguesiasService.updateFreguesia(nome,freguesiaDTO);
+            TerrenosService.updateTerrenoRectangular(nome, numID, terrenoRectangularDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
+        }
+    }
+
+    @RequestMapping(value = "/freguesias/{nome}/terrenos/circular/{id}",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_XML_VALUE,
+            produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<Object> updateTerrenoCircular(@PathVariable("nome") String nome, @PathVariable("id") int numID,
+                                                  @RequestBody TerrenoCircularDTO terrenoCircularDTO
+    ) {
+        try {
+            TerrenosService.updateTerrenoCircular(nome, numID, terrenoCircularDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
+        }
+    }
+
+    @RequestMapping(value = "/freguesias/{nome}/terrenos/triangulo/{id}",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_XML_VALUE,
+            produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<Object> updateTerrenoTriangular(@PathVariable("nome") String nome, @PathVariable("id") int numID,
+                                                        @RequestBody TerrenoTriangularDTO terrenoTriangularDTO
+    ) {
+        try {
+            TerrenosService.updateTerrenoTriangular(nome, numID, terrenoTriangularDTO);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
         }
     }
     
-    @RequestMapping(value = "/freguesias/{id}",
+    @RequestMapping(value = "/freguesias/{nome}/terrenos/{id}",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Object> removeFreguesia(@PathVariable("id") String nome) {
+    public ResponseEntity<Object> removeFreguesia(@PathVariable("nome") String nome, @PathVariable("id") int numID) {
         try {
-            FreguesiasService.removeFreguesia(nome);
+            TerrenosService.removeTerreno(nome, numID);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
         }
-    }*/
+    }
 
 }

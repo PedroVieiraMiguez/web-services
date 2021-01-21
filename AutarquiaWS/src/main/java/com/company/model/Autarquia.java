@@ -121,6 +121,14 @@ public class Autarquia implements Serializable {
         throw new ElementoNaoExistenteException(nome + ": Não existe essa freguesia");
     }
 
+    public void removeTerreno(String nome, int numID) throws ElementoNaoExistenteException {
+        try {
+            Objects.requireNonNull(getFreguesiaByNome(nome)).removeTerreno(numID);
+        } catch (ElementoNaoExistenteException e) {
+            throw new ElementoNaoExistenteException(nome + ": Não existe essa freguesia");
+        }
+    }
+
     public void updatePessoa(long nif, Pessoa p) throws ElementoNaoExistenteException {
         Pessoa pessoa = null;
         boolean updated = false;

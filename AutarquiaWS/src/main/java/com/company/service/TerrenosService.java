@@ -44,6 +44,7 @@ public class TerrenosService {
             throw new ConversaoException("TerrenoCircularDTO");
         }
     }
+
     public static TerrenoCircularDTO getTerrenoCircular(String nome, int numID) {
         Autarquia autarquia = Dados.carregarDados();
         Freguesia freguesia = autarquia.getFreguesia(nome);
@@ -157,8 +158,7 @@ public class TerrenosService {
 
     public static void removeTerreno(String nome, int numID) {
         Autarquia autarquia = Dados.carregarDados();
-        Freguesia freguesia = autarquia.getFreguesia(nome);
-        freguesia.removeTerreno(numID);
+        autarquia.removeTerreno(nome, numID);
         Dados.guardarDados(autarquia);
     }
 }
