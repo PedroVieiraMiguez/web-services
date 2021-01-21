@@ -1,9 +1,9 @@
 package com.company.service;
 
+import com.company.dto.*;
+import com.company.model.Terreno;
+import com.company.model.Triangulo;
 import com.company.repo.Dados;
-import com.company.dto.ListaFreguesiaDTO;
-import com.company.dto.Mapper;
-import com.company.dto.FreguesiaDTO;
 import com.company.exception.ConversaoException;
 import com.company.model.Autarquia;
 import com.company.model.Freguesia;
@@ -11,53 +11,149 @@ import java.util.ArrayList;
 
 public class TerrenosService {
     
-    public static ListaFreguesiaDTO getFreguesias() {
-        ListaFreguesiaDTO listaFreguesiaDTO = null;
+    public static ListaTerrenoDTO getTerrenos() {
+        ListaTerrenoDTO listaTerrenoDTO = null;
         Autarquia autarquia = Dados.carregarDados();
-        ArrayList<Freguesia> freguesias = autarquia.getAllFreguesias();
-        listaFreguesiaDTO = Mapper.listFreguesia2FreguesiaDTO(freguesias);
-        return listaFreguesiaDTO;
+        ArrayList<Terreno> terrenos = autarquia.getAllTerrenos();
+        listaTerrenoDTO = Mapper.listTerreno2TerrenoDTO(terrenos);
+        return listaTerrenoDTO;
     }
 
-    public static FreguesiaDTO getFreguesia(String nome) {
+    public static Object getTerreno(String nome, int numID) {
         Autarquia autarquia = Dados.carregarDados();
         Freguesia freguesia = autarquia.getFreguesia(nome);
-        if (freguesia == null) {
+        Terreno terreno = freguesia.getTerrenoByNumID(numID);
+        if (terreno == null) {
             return null;
         }
-        FreguesiaDTO freguesiaDTO = Mapper.freguesia2FreguesiaDTO(freguesia);
-        if (freguesiaDTO != null) {
-            return freguesiaDTO;
+
+        if (terreno.getForma() instanceof Triangulo) {
+            return Mapper.terreno2terrenoTriangularDTO(terreno);
         } else {
-            throw new ConversaoException("FreguesiaDTO");
+            return null;
         }
     }
-
-    public static void addFreguesia(FreguesiaDTO freguesiaDTO) {
-        Freguesia freguesia = Mapper.freguesiaDTO2Freguesia(freguesiaDTO);
-        if (freguesia != null) {
-            Autarquia autarquia = Dados.carregarDados();
-            autarquia.addFreguesia(freguesia);
-            Dados.guardarDados(autarquia);
-        } else {
-            throw new ConversaoException("FreguesiaDTO");
-        }
-    }
-
-    public static void updateFreguesia(String nome, FreguesiaDTO freguesiaDTO) {
-        Freguesia freguesia = Mapper.freguesiaDTO2Freguesia(freguesiaDTO);
-        if (freguesia != null) {
-            Autarquia autarquia = Dados.carregarDados();
-            autarquia.updateFreguesia(nome, freguesia);
-            Dados.guardarDados(autarquia);
-        } else {
-            throw new ConversaoException("FreguesiaDTO");
-        }
-    }
-
-    public static void removeFreguesia(String nome) {
+    public static TerrenoCircularDTO getTerrenoCircular(String nome, int numID) {
         Autarquia autarquia = Dados.carregarDados();
-        autarquia.removeFreguesia(nome);
+        Freguesia freguesia = autarquia.getFreguesia(nome);
+        Terreno terreno = freguesia.getTerrenoByNumID(numID);
+        if (terreno == null) {
+            return null;
+        }
+        TerrenoCircularDTO terrenoCircularDTO = Mapper.terreno2terrenoCircularDTO(terreno);
+        if (terrenoCircularDTO != null) {
+            return terrenoCircularDTO;
+        } else {
+            throw new ConversaoException("TerrenoCircularDTO");
+        }
+    }
+
+    public static TerrenoRectangularDTO getTerrenoRectangular(String nome, int numID) {
+        Autarquia autarquia = Dados.carregarDados();
+        Freguesia freguesia = autarquia.getFreguesia(nome);
+        Terreno terreno = freguesia.getTerrenoByNumID(numID);
+        if (terreno == null) {
+            return null;
+        }
+        TerrenoRectangularDTO terrenoRectangularDTO = Mapper.terreno2terrenoRectangularDTO(terreno);
+        if (terrenoRectangularDTO != null) {
+            return terrenoRectangularDTO;
+        } else {
+            throw new ConversaoException("TerrenoRectangularDTO");
+        }
+    }
+
+    public static TerrenoTriangularDTO getTerrenoTriangular(String nome, int numID) {
+        Autarquia autarquia = Dados.carregarDados();
+        Freguesia freguesia = autarquia.getFreguesia(nome);
+        Terreno terreno = freguesia.getTerrenoByNumID(numID);
+        if (terreno == null) {
+            return null;
+        }
+        TerrenoTriangularDTO terrenoTriangularDTO = Mapper.terreno2terrenoTriangularDTO(terreno);
+        if (terrenoTriangularDTO != null) {
+            return terrenoTriangularDTO;
+        } else {
+            throw new ConversaoException("TerrenoTriangularDTO");
+        }
+    }
+
+    public static void addTerrenoCircular(String nome, TerrenoCircularDTO terrenoCircDTO) {
+        Terreno terreno = Mapper.terrenoCircularDTO2Terreno(terrenoCircDTO);
+        if (terreno != null) {
+            Autarquia autarquia = Dados.carregarDados();
+            Freguesia freguesia = autarquia.getFreguesia(nome);
+            freguesia.addTerreno(terreno);
+            Dados.guardarDados(autarquia);
+        } else {
+            throw new ConversaoException("TerrenoCircularDTO");
+        }
+    }
+
+    public static void addTerrenoRectangular(String nome, TerrenoRectangularDTO terrenoRectDTO) {
+        Terreno terreno = Mapper.terrenoRectangularDTO2Terreno(terrenoRectDTO);
+        if (terreno != null) {
+            Autarquia autarquia = Dados.carregarDados();
+            Freguesia freguesia = autarquia.getFreguesia(nome);
+            freguesia.addTerreno(terreno);
+            Dados.guardarDados(autarquia);
+        } else {
+            throw new ConversaoException("TerrenoRectangularDTO");
+        }
+    }
+
+    public static void addTerrenoTriangular(String nome, TerrenoTriangularDTO terrenoTriDTO) {
+        Terreno terreno = Mapper.terrenoTriangularDTO2Terreno(terrenoTriDTO);
+        if (terreno != null) {
+            Autarquia autarquia = Dados.carregarDados();
+            Freguesia freguesia = autarquia.getFreguesia(nome);
+            freguesia.addTerreno(terreno);
+            Dados.guardarDados(autarquia);
+        } else {
+            throw new ConversaoException("TerrenoTriangularDTO");
+        }
+    }
+
+    public static void updateTerrenoCircular(String nome, int numID, TerrenoCircularDTO terrenoCircDTO) {
+        Terreno terreno = Mapper.terrenoCircularDTO2Terreno(terrenoCircDTO);
+        if (terreno != null) {
+            Autarquia autarquia = Dados.carregarDados();
+            Freguesia freguesia = autarquia.getFreguesia(nome);
+            freguesia.updateTerreno(numID, terreno);
+            Dados.guardarDados(autarquia);
+        } else {
+            throw new ConversaoException("TerrenoCircularDTO");
+        }
+    }
+
+    public static void updateTerrenoRectangular(String nome, int numID, TerrenoRectangularDTO terrenoRectDTO) {
+        Terreno terreno = Mapper.terrenoRectangularDTO2Terreno(terrenoRectDTO);
+        if (terreno != null) {
+            Autarquia autarquia = Dados.carregarDados();
+            Freguesia freguesia = autarquia.getFreguesia(nome);
+           freguesia.updateTerreno(numID, terreno);
+            Dados.guardarDados(autarquia);
+        } else {
+            throw new ConversaoException("TerrenoRectangularDTO");
+        }
+    }
+
+    public static void updateTerrenoTriangular(String nome, int numID, TerrenoTriangularDTO terrenoTriDTO) {
+        Terreno terreno = Mapper.terrenoTriangularDTO2Terreno(terrenoTriDTO);
+        if (terreno != null) {
+            Autarquia autarquia = Dados.carregarDados();
+            Freguesia freguesia = autarquia.getFreguesia(nome);
+            freguesia.updateTerreno(numID, terreno);
+            Dados.guardarDados(autarquia);
+        } else {
+            throw new ConversaoException("TerrenoTriangularDTO");
+        }
+    }
+
+    public static void removeTerreno(String nome, int numID) {
+        Autarquia autarquia = Dados.carregarDados();
+        Freguesia freguesia = autarquia.getFreguesia(nome);
+        freguesia.removeTerreno(numID);
         Dados.guardarDados(autarquia);
     }
 }

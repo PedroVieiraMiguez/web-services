@@ -1,8 +1,9 @@
 package com.company.model;
 
 import com.company.exception.RaioInvalidoException;
+import java.io.Serializable;
 
-public class Circulo extends Forma {
+public class Circulo extends Forma implements Serializable {
     
     private double raio;
     

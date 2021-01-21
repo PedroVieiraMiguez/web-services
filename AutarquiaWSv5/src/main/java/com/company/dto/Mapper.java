@@ -4,6 +4,7 @@ import com.company.model.Data;
 import com.company.model.Funcionario;
 import com.company.model.Pessoa;
 import com.company.model.Freguesia;
+import com.company.model.Terreno;
 import java.util.ArrayList;
 
 public class Mapper {
@@ -36,6 +37,14 @@ public class Mapper {
         freguesiaDTO.setNome(freguesia.getNome());
         return freguesiaDTO;
     }
+    
+    public static TerrenoDTO terreno2terrenoDTO(Terreno terreno) throws NullPointerException {
+        TerrenoDTO terrenoDTO = new TerrenoDTO();
+        terrenoDTO.setNumID(terreno.getNumID());
+        return terrenoDTO;
+    }
+    
+    
 
     public static Pessoa pessoaDTO2Pessoa(PessoaDTO pessoaDTO) throws NullPointerException {
         Pessoa pessoa = null;

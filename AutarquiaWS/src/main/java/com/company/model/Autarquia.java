@@ -39,6 +39,15 @@ public class Autarquia implements Serializable {
         return new ArrayList<>(freguesias);
     }
 
+    public ArrayList<Terreno> getAllTerrenos() {
+        ArrayList<Terreno> listaTodosTerrenos = new ArrayList<>();
+        for (Freguesia f : getAllFreguesias()) {
+            listaTodosTerrenos.addAll(f.getAllTerrenos());
+        }
+
+        return listaTodosTerrenos;
+    }
+
     public ArrayList<Pessoa> getPessoas() {
         Pessoa pessoa;
         ArrayList<Pessoa> lista = new ArrayList<>();
