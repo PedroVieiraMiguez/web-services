@@ -1,24 +1,22 @@
 package com.company.model;
 
 import com.company.exception.IdTerrenoInvalidoException;
+import java.io.Serializable;
 
 
-public class Terreno {
+public class Terreno implements Serializable {
     
     private int numID;
     private Forma forma;
-    private double area;
     
     public Terreno (int numID, Forma forma) {
         setNumID(numID);
         setForma(forma);
-        setArea(forma.calcularArea());
     }
     
     public Terreno (Terreno terreno) {
         setNumID(terreno.getNumID());
         setForma(terreno.getForma());
-        setArea(terreno.getArea());
     }
 
     
@@ -43,12 +41,9 @@ public class Terreno {
     }
 
     public double getArea() {
-        return area;
+        return forma.calcularArea();
     }
 
-    public void setArea(double area) {
-        this.area = area;
-    }
     
 
 }

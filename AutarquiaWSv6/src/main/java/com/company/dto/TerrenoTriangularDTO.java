@@ -6,18 +6,18 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
-@JsonPropertyOrder({"numID", "forma", "area"})
-@JacksonXmlRootElement(localName = "terreno")
-public class TerrenoDTO {
+@JsonPropertyOrder({"numID", "base", "altura"})
+@JacksonXmlRootElement(localName = "terreno-triangular")
+public class TerrenoTriangularDTO {
 
     @JacksonXmlProperty(localName = "numID")
     private int numID;
-    @JacksonXmlProperty(localName = "forma")
-    private Forma forma;
-    @JacksonXmlProperty(localName = "area")
-    private double area;
+    @JacksonXmlProperty(localName = "base")
+    private double base;
+    @JacksonXmlProperty(localName = "altura")
+    private double altura;
 
-    public TerrenoDTO() {
+    public TerrenoTriangularDTO() {
     }
 
     public int getNumID() {
@@ -29,19 +29,24 @@ public class TerrenoDTO {
         
     }
 
-    public Forma getForma() {
-        return forma;
+    public double getBase() {
+        return base;
     }
 
-    public void setForma(Forma forma) {
-        this.forma = forma;
+    
+    public void setBase(double base) {
+        this.base = base;
     }
 
-    public double getArea() {
-        return area;
+    
+    public double getAltura() {
+        return altura;
     }
 
-    public void setArea(double area) {
-        this.area = area;
+    
+    public void setAltura(double altura) {
+        this.altura = altura;
     }
+
+    
 }

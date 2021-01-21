@@ -23,6 +23,7 @@ public class Freguesia implements Serializable {
     
     public Freguesia (Freguesia freguesia) {
         setNome(freguesia.getNome());
+        this.terrenos = new ArrayList<>();
     }
     
     public ArrayList<Terreno> getAllTerrenos() {
@@ -95,7 +96,7 @@ public class Freguesia implements Serializable {
         return true;
     }
     
-    private Terreno getTerrenoByNumID(int numID) {
+    public Terreno getTerrenoByNumID(int numID) {
         Terreno terreno = null;
         for (int i = 0; i < this.terrenos.size(); i++) {
             terreno = this.terrenos.get(i);

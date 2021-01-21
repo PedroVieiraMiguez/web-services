@@ -1,28 +1,20 @@
 package com.company.service;
 
 import com.company.dto.*;
-import com.company.model.*;
+import com.company.model.Terreno;
+import com.company.model.Triangulo;
 import com.company.repo.Dados;
 import com.company.exception.ConversaoException;
-
+import com.company.model.Autarquia;
+import com.company.model.Freguesia;
 import java.util.ArrayList;
 
 public class TerrenosService {
-
-
     
-    public static ListaTerrenoDTO getAllTerrenos() {
+    public static ListaTerrenoDTO getTerrenos() {
         ListaTerrenoDTO listaTerrenoDTO = null;
         Autarquia autarquia = Dados.carregarDados();
         ArrayList<Terreno> terrenos = autarquia.getAllTerrenos();
-        listaTerrenoDTO = Mapper.listTerreno2TerrenoDTO(terrenos);
-        return listaTerrenoDTO;
-    }
-
-    public static ListaTerrenoDTO getTerrenosByFreguesiaNome(String nome) {
-        ListaTerrenoDTO listaTerrenoDTO = null;
-        Autarquia autarquia = Dados.carregarDados();
-        ArrayList<Terreno> terrenos = autarquia.getFreguesia(nome).getAllTerrenos();
         listaTerrenoDTO = Mapper.listTerreno2TerrenoDTO(terrenos);
         return listaTerrenoDTO;
     }
@@ -34,14 +26,11 @@ public class TerrenosService {
         if (terreno == null) {
             return null;
         }
+
         if (terreno.getForma() instanceof Triangulo) {
             return Mapper.terreno2terrenoTriangularDTO(terreno);
-        } else if (terreno.getForma() instanceof Rectangulo){
-            return Mapper.terreno2terrenoRectangularDTO(terreno);
-        } else if (terreno.getForma() instanceof Circulo) {
-            return Mapper.terreno2terrenoCircularDTO(terreno);
         } else {
-            throw new ConversaoException("TerrenoCircularDTO");
+            return null;
         }
     }
     public static TerrenoCircularDTO getTerrenoCircular(String nome, int numID) {
@@ -142,7 +131,7 @@ public class TerrenosService {
         if (terreno != null) {
             Autarquia autarquia = Dados.carregarDados();
             Freguesia freguesia = autarquia.getFreguesia(nome);
-            freguesia.updateTerreno(numID, terreno);
+           freguesia.updateTerreno(numID, terreno);
             Dados.guardarDados(autarquia);
         } else {
             throw new ConversaoException("TerrenoRectangularDTO");

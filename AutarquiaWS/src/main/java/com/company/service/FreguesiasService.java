@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class FreguesiasService {
     
     public static ListaFreguesiaDTO getFreguesias() {
-        ListaFreguesiaDTO listaFreguesiaDTO = null;
+        ListaFreguesiaDTO listaFreguesiaDTO;
         Autarquia autarquia = Dados.carregarDados();
         ArrayList<Freguesia> freguesias = autarquia.getAllFreguesias();
         listaFreguesiaDTO = Mapper.listFreguesia2FreguesiaDTO(freguesias);

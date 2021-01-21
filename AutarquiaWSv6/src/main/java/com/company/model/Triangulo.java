@@ -2,8 +2,9 @@ package com.company.model;
 
 import com.company.exception.AlturaInvalidaException;
 import com.company.exception.BaseInvalidaException;
+import java.io.Serializable;
 
-public class Triangulo extends Forma {
+public class Triangulo extends Forma implements Serializable {
     
     private double base;
     private double altura;
