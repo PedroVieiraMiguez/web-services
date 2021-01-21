@@ -23,7 +23,7 @@ public class Freguesia implements Serializable {
     
     public Freguesia (Freguesia freguesia) {
         setNome(freguesia.getNome());
-        this.terrenos = new ArrayList<>();
+        this.terrenos = freguesia.getAllTerrenos();
     }
 
     public ArrayList<Integer> getAllIDs() {

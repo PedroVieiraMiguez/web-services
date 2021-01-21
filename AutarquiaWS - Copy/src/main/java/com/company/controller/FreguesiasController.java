@@ -50,7 +50,7 @@ public class FreguesiasController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_XML_VALUE,
             produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Object> addPessoa(@RequestBody FreguesiaDTO freguesiaDTO) {
+    public ResponseEntity<Object> addFreguesia(@RequestBody FreguesiaDTO freguesiaDTO) {
         try {
             FreguesiasService.addFreguesia(freguesiaDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);

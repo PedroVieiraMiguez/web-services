@@ -25,6 +25,14 @@ public class Freguesia implements Serializable {
         setNome(freguesia.getNome());
         this.terrenos = new ArrayList<>();
     }
+
+    public ArrayList<Integer> getAllIDs() {
+        ArrayList<Integer> allIDs = new ArrayList<>();
+        for (Terreno t : this.terrenos) {
+            allIDs.add(t.getNumID());
+        }
+        return allIDs;
+    }
     
     public ArrayList<Terreno> getAllTerrenos() {
         return new ArrayList<>(terrenos);

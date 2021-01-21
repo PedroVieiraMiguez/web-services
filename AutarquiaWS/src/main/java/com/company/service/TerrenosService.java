@@ -93,8 +93,7 @@ public class TerrenosService {
         Terreno terreno = Mapper.terrenoCircularDTO2Terreno(terrenoCircDTO);
         if (terreno != null) {
             Autarquia autarquia = Dados.carregarDados();
-            Freguesia freguesia = autarquia.getFreguesia(nome);
-            freguesia.addTerreno(terreno);
+            autarquia.addTerreno(nome, terreno);
             Dados.guardarDados(autarquia);
         } else {
             throw new ConversaoException("TerrenoCircularDTO");
@@ -105,8 +104,7 @@ public class TerrenosService {
         Terreno terreno = Mapper.terrenoRectangularDTO2Terreno(terrenoRectDTO);
         if (terreno != null) {
             Autarquia autarquia = Dados.carregarDados();
-            Freguesia freguesia = autarquia.getFreguesia(nome);
-            freguesia.addTerreno(terreno);
+            autarquia.addTerreno(nome, terreno);
             Dados.guardarDados(autarquia);
         } else {
             throw new ConversaoException("TerrenoRectangularDTO");
@@ -117,8 +115,7 @@ public class TerrenosService {
         Terreno terreno = Mapper.terrenoTriangularDTO2Terreno(terrenoTriDTO);
         if (terreno != null) {
             Autarquia autarquia = Dados.carregarDados();
-            Freguesia freguesia = autarquia.getFreguesia(nome);
-            freguesia.addTerreno(terreno);
+            autarquia.addTerreno(nome, terreno);
             Dados.guardarDados(autarquia);
         } else {
             throw new ConversaoException("TerrenoTriangularDTO");
@@ -129,8 +126,7 @@ public class TerrenosService {
         Terreno terreno = Mapper.terrenoCircularDTO2Terreno(terrenoCircDTO);
         if (terreno != null) {
             Autarquia autarquia = Dados.carregarDados();
-            Freguesia freguesia = autarquia.getFreguesia(nome);
-            freguesia.updateTerreno(numID, terreno);
+            autarquia.updateTerreno(nome, numID, terreno);
             Dados.guardarDados(autarquia);
         } else {
             throw new ConversaoException("TerrenoCircularDTO");
@@ -141,8 +137,7 @@ public class TerrenosService {
         Terreno terreno = Mapper.terrenoRectangularDTO2Terreno(terrenoRectDTO);
         if (terreno != null) {
             Autarquia autarquia = Dados.carregarDados();
-            Freguesia freguesia = autarquia.getFreguesia(nome);
-            freguesia.updateTerreno(numID, terreno);
+            autarquia.updateTerreno(nome, numID, terreno);
             Dados.guardarDados(autarquia);
         } else {
             throw new ConversaoException("TerrenoRectangularDTO");
@@ -153,8 +148,7 @@ public class TerrenosService {
         Terreno terreno = Mapper.terrenoTriangularDTO2Terreno(terrenoTriDTO);
         if (terreno != null) {
             Autarquia autarquia = Dados.carregarDados();
-            Freguesia freguesia = autarquia.getFreguesia(nome);
-            freguesia.updateTerreno(numID, terreno);
+            autarquia.updateTerreno(nome, numID, terreno);
             Dados.guardarDados(autarquia);
         } else {
             throw new ConversaoException("TerrenoTriangularDTO");
