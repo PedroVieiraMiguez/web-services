@@ -85,6 +85,7 @@ public class Autarquia implements Serializable {
         Objects.requireNonNull(this.getFreguesiaByNome(nome)).addTerreno(terreno);
     }
 
+
     public Pessoa getPessoa(long nif) {
         return new Pessoa(Objects.requireNonNull(getPessoaByNif(nif)));
     }
@@ -180,6 +181,7 @@ public class Autarquia implements Serializable {
         }
         return null;
     }
+
 
 
     public ArrayList<Funcionario> getFuncionarios() {

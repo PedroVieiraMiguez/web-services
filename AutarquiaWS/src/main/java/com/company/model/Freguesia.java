@@ -1,11 +1,10 @@
 package com.company.model;
 
-import com.company.exception.ElementoNaoExistenteException;
-import com.company.exception.IdTerrenoInvalidoException;
-import com.company.exception.NomeFreguesiaInvalidoException;
-import com.company.exception.NomePessoaInvalidoException;
+import com.company.exception.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class Freguesia implements Serializable {
@@ -70,7 +69,7 @@ public class Freguesia implements Serializable {
                 updated = true;
             }
         }
-        if (updated == false) {
+        if (!updated) {
             throw new ElementoNaoExistenteException(nome + ": Não existe essa freguesia");
         }
     }
@@ -104,15 +103,39 @@ public class Freguesia implements Serializable {
         return true;
     }
     
-    public Terreno getTerrenoByNumID(int numID) {
+    private Terreno getTerrenoByNumID(int numID) {
         Terreno terreno = null;
         for (int i = 0; i < this.terrenos.size(); i++) {
             terreno = this.terrenos.get(i);
             if (terreno.getNumID() == numID) {
-                Terreno copia = new Terreno(terreno);
-                return copia;
+                return terreno;
             }
         }
         return null;
     }
+
+    public Terreno getTerreno(int numID) {
+        return new Terreno(Objects.requireNonNull(getTerrenoByNumID(numID)));
+    }
+
+    public void addProprietario(int numID, Pessoa pessoa) throws ProprietarioTerrenoDuplicadoException {
+        Terreno t = getTerrenoByNumID(numID);
+        assert t != null;
+        if (!t.getProprietarios().contains(pessoa)) {
+            t.addProprietario(pessoa);
+        }
+        throw new ProprietarioTerrenoDuplicadoException(pessoa.getNif() + ": a pessoa associada a este NIF já é proprietária deste terreno");
+    }
+
+    public void addProprietarios(int numID, ArrayList<Pessoa> proprietarios) throws ProprietarioTerrenoDuplicadoException {
+        Terreno t = getTerrenoByNumID(numID);
+        assert t != null;
+
+        for(Pessoa pessoa: proprietarios) {
+            if (!t.getProprietarios().contains(pessoa)) {
+                t.addProprietario(pessoa);
+            }
+        }
+    }
+
 }

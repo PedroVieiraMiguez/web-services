@@ -30,7 +30,7 @@ public class TerrenosService {
     public static Object getTerreno(String nome, int numID) {
         Autarquia autarquia = Dados.carregarDados();
         Freguesia freguesia = autarquia.getFreguesia(nome);
-        Terreno terreno = freguesia.getTerrenoByNumID(numID);
+        Terreno terreno = freguesia.getTerreno(numID);
         if (terreno == null) {
             return null;
         }
@@ -48,7 +48,7 @@ public class TerrenosService {
     public static TerrenoCircularDTO getTerrenoCircular(String nome, int numID) {
         Autarquia autarquia = Dados.carregarDados();
         Freguesia freguesia = autarquia.getFreguesia(nome);
-        Terreno terreno = freguesia.getTerrenoByNumID(numID);
+        Terreno terreno = freguesia.getTerreno(numID);
         if (terreno == null) {
             return null;
         }
@@ -63,7 +63,7 @@ public class TerrenosService {
     public static TerrenoRectangularDTO getTerrenoRectangular(String nome, int numID) {
         Autarquia autarquia = Dados.carregarDados();
         Freguesia freguesia = autarquia.getFreguesia(nome);
-        Terreno terreno = freguesia.getTerrenoByNumID(numID);
+        Terreno terreno = freguesia.getTerreno(numID);
         if (terreno == null) {
             return null;
         }
@@ -78,7 +78,7 @@ public class TerrenosService {
     public static TerrenoTriangularDTO getTerrenoTriangular(String nome, int numID) {
         Autarquia autarquia = Dados.carregarDados();
         Freguesia freguesia = autarquia.getFreguesia(nome);
-        Terreno terreno = freguesia.getTerrenoByNumID(numID);
+        Terreno terreno = freguesia.getTerreno(numID);
         if (terreno == null) {
             return null;
         }
