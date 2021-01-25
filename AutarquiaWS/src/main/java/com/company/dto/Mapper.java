@@ -180,4 +180,10 @@ public class Mapper {
         listaFuncionarioDTO.setFuncionarios(funcionariosDTO);
         return listaFuncionarioDTO;
     }
+
+    public static ArrayList<Integer> listaNIFsDTO2ListaNIFs(ListaNIFsDTO listaNIFsDTO) {
+        return new ArrayList<>(listaNIFsDTO.getNIFs());
+    }
+
+
 }

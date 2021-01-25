@@ -46,5 +46,5 @@ public class TerrenoRectangularDTO {
     public void setLargura(double largura) {
         this.largura = largura;
     }
-    
+
 }

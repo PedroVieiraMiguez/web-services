@@ -5,6 +5,7 @@ import com.company.model.*;
 import com.company.repo.Dados;
 import com.company.exception.ConversaoException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TerrenosService {
@@ -25,6 +26,14 @@ public class TerrenosService {
         ArrayList<Terreno> terrenos = autarquia.getFreguesia(nome).getAllTerrenos();
         listaTerrenoDTO = Mapper.listTerreno2TerrenoDTO(terrenos);
         return listaTerrenoDTO;
+    }
+
+    public static ListaPessoaDTO getProprietarios(String nome, int numID) {
+        ListaPessoaDTO listaPessoaDTO = null;
+        Autarquia autarquia = Dados.carregarDados();
+        ArrayList<Pessoa> pessoas = autarquia.getProprietarios(nome, numID);
+        listaPessoaDTO = Mapper.listPessoa2PessoaDTO(pessoas);
+        return listaPessoaDTO;
     }
 
     public static Object getTerreno(String nome, int numID) {
@@ -87,6 +96,18 @@ public class TerrenosService {
             return terrenoTriangularDTO;
         } else {
             throw new ConversaoException("TerrenoTriangularDTO");
+        }
+    }
+
+    public static ListaPessoaDTO addProprietario(String nome, int numID, ListaNIFsDTO listaNIFsDTO) {
+        ArrayList<Integer> listaNIFs = Mapper.listaNIFsDTO2ListaNIFs(listaNIFsDTO);
+        if (listaNIFs.size() > 0) {
+            Autarquia autarquia = Dados.carregarDados();
+            autarquia.addProprietario(listaNIFs, nome, numID);
+            Dados.guardarDados(autarquia);
+            return Mapper.listPessoa2PessoaDTO(autarquia.getProprietarios(nome, numID));
+        } else {
+            throw new ConversaoException("Adicionar Proprietário");
         }
     }
 
@@ -161,4 +182,5 @@ public class TerrenosService {
         autarquia.removeTerreno(nome, numID);
         Dados.guardarDados(autarquia);
     }
+
 }

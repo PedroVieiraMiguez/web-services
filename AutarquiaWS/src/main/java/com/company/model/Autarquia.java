@@ -78,6 +78,15 @@ public class Autarquia implements Serializable {
         }
     }
 
+    public void removeProprietario(String nome, int numID, Pessoa pessoa) {
+        Pessoa p = getPessoaByNif(pessoa.getNif());
+        if (p != null) {
+            Objects.requireNonNull(getFreguesiaByNome(nome)).removeProprietario(numID, pessoa);
+        } else {
+            throw new ProprietarioNaoExistenteException(pessoa.getNif() + " não existe nenhuma pessoa registada na autarquia com este NIF");
+        }
+    }
+
     public ArrayList<Pessoa> getProprietarios(String nome, int numID) {
         return Objects.requireNonNull(getFreguesiaByNome(nome)).getTerreno(numID).getProprietarios();
     }
@@ -195,6 +204,8 @@ public class Autarquia implements Serializable {
 
 
 
+
+
     public ArrayList<Funcionario> getFuncionarios() {
         Pessoa pessoa;
         ArrayList<Funcionario> lista = new ArrayList<>();
@@ -238,14 +249,13 @@ public class Autarquia implements Serializable {
         for (int i = 0; i < this.pessoas.size(); i++) {
             pessoa = this.pessoas.get(i);
             if (pessoa instanceof Funcionario) {
-                if (pessoa instanceof Funcionario) {
                     funcionario = (Funcionario) pessoa;
                     if (funcionario.getNumeroFuncionario() == nr) {
                         this.pessoas.remove(i);
                         return;
                     }
                 }
-            }
+
         }
         throw new ElementoNaoExistenteException(nr + ": N~ao existe esse funcion´ario");
     }

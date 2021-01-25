@@ -14,7 +14,7 @@ public class TerrenoCircularDTO {
     private int numID;
     @JacksonXmlProperty(localName = "raio")
     private double raio;
-    
+
 
     public TerrenoCircularDTO() {
     }
@@ -38,10 +38,5 @@ public class TerrenoCircularDTO {
         this.raio = raio;
     }
 
-    
 
-    
-    
-
-    
 }

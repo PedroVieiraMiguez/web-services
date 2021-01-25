@@ -45,6 +45,23 @@ public class TerrenosController {
         }
     }
 
+    @RequestMapping(value = "/freguesias/{nome}/terrenos/{numid}/proprietarios",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<Object> getProprietarios(@PathVariable("nome") String name,
+                                                   @PathVariable("numid") int numID) {
+        try {
+            ListaPessoaDTO listaProprietarios = TerrenosService.getProprietarios(name, numID);
+            if (listaProprietarios.getPessoas().size() > 0) {
+                return new ResponseEntity<>(listaProprietarios, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
+        }
+    }
+
     @RequestMapping(value = "freguesias/{nome}/terrenos/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_XML_VALUE)
@@ -56,6 +73,21 @@ public class TerrenosController {
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
+        }
+    }
+
+    @RequestMapping(value = "/freguesias/{nome}/terrenos/{numid}/proprietarios",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_XML_VALUE,
+            produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<Object> addProprietario(@RequestBody ListaNIFsDTO listaNIFsDTO,
+                                                  @PathVariable("nome") String nome,
+                                                  @PathVariable("numid") int numID) {
+        try {
+            ListaPessoaDTO listaProprietarios = TerrenosService.addProprietario(nome, numID, listaNIFsDTO);
+            return new ResponseEntity<>(listaProprietarios, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErroDTO(e), HttpStatus.CONFLICT);
         }

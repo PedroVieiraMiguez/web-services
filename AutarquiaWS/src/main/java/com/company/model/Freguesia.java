@@ -126,14 +126,11 @@ public class Freguesia implements Serializable {
         }
     }
 
-    public void addProprietarios(int numID, ArrayList<Pessoa> proprietarios) throws ProprietarioTerrenoDuplicadoException {
+    public void removeProprietario(int numID, Pessoa pessoa) throws ProprietarioNaoExistenteException {
         Terreno t = getTerrenoByNumID(numID);
         assert t != null;
-
-        for(Pessoa pessoa: proprietarios) {
-            if (!t.getProprietarios().contains(pessoa)) {
-                t.addProprietario(pessoa);
-            }
+        if (!t.removeProprietario(pessoa)) {
+            throw new ProprietarioNaoExistenteException(pessoa.getNif() + ": não existe nenhum proprietário com este NIF associado ao terreno.");
         }
     }
 

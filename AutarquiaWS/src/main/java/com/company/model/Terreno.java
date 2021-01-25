@@ -73,4 +73,8 @@ public class Terreno implements Serializable {
     public void addProprietario(Pessoa pessoa) {
         this.proprietarios.add(pessoa);
     }
+
+    public boolean removeProprietario(Pessoa pessoa) {
+        return this.proprietarios.remove(pessoa);
+    }
 }
