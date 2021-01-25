@@ -124,7 +124,6 @@ public class Freguesia implements Serializable {
         if (!t.getProprietarios().contains(pessoa)) {
             t.addProprietario(pessoa);
         }
-        throw new ProprietarioTerrenoDuplicadoException(pessoa.getNif() + ": a pessoa associada a este NIF já é proprietária deste terreno");
     }
 
     public void addProprietarios(int numID, ArrayList<Pessoa> proprietarios) throws ProprietarioTerrenoDuplicadoException {

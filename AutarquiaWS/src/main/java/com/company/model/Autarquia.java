@@ -1,9 +1,7 @@
 package com.company.model;
 
-import com.company.exception.ElementoNaoExistenteException;
-import com.company.exception.NifDuplicadoException;
-import com.company.exception.NomeFreguesiaDuplicadoException;
-import com.company.exception.NumeroFuncionarioDuplicadoException;
+import com.company.exception.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -69,6 +67,19 @@ public class Autarquia implements Serializable {
         } else {
             throw new NifDuplicadoException(p.getNif() + ": NIF já existe");
         }
+    }
+
+    public void addProprietario(ArrayList<Integer> nifs, String nome, int numID) throws ProprietarioNaoExistenteException {
+        for (Integer i : nifs) {
+            Pessoa p = getPessoaByNif(i);
+            if (p != null) {
+                Objects.requireNonNull(getFreguesiaByNome(nome)).addProprietario(numID, p);
+            }
+        }
+    }
+
+    public ArrayList<Pessoa> getProprietarios(String nome, int numID) {
+        return Objects.requireNonNull(getFreguesiaByNome(nome)).getTerreno(numID).getProprietarios();
     }
     
     public boolean addFreguesia(Freguesia freguesia) throws NomeFreguesiaDuplicadoException {
